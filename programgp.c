@@ -7,17 +7,17 @@
  */
 char *getenvin(const char *name)
 {
-    int t, result;
+	int t, result;
 
-    for (t = 0; environ[t]; t++)
-    {
-        result = _PATHstrcmp(name, environ[t]);
-        if (result == 0)
-        {
-            return (environ[t]);
-        }
-    }
-    return (NULL);
+	for (t = 0; environ[t]; t++)
+	{
+		result = _PATHstrcmp(name, environ[t]);
+		if (result == 0)
+	{
+		return (environ[t]);
+	}
+	}
+	return (NULL);
 }
 /**
  * envin - prints the environ
@@ -26,11 +26,11 @@ char *getenvin(const char *name)
  */
 int envin(void)
 {
-    int t;
+	int t;
 
-    for (t = 0; environ[t]; t++)
-        _puts(environ[t]);
-    return (0);
+	for (t = 0; environ[t]; t++)
+		puts(environ[t]);
+	return (0);
 }
 /**
  * puts - prints a string
@@ -38,11 +38,11 @@ int envin(void)
  */
 void puts(char *str)
 {
-    int t;
+	int t;
 
-    for (t = 0; str[t] != '\0'; t++)
-        putchar(str[t]);
-    putchar('\n');
+	for (t = 0; str[t] != '\0'; t++)
+		putchar(str[t]);
+	putchar('\n');
 }
 /**
  * putchar - prints a character
@@ -51,7 +51,8 @@ void puts(char *str)
  * Return: return value of write syscall
  */
 int putchar(char t)
-    return (write(1, &t, 1));
+{
+	return (write(1, &t, 1));
 }
 /**
  * memsetin - fills memory with a constant byte
@@ -62,9 +63,9 @@ int putchar(char t)
  */
 char *memsetin(char *r, char b, unsigned int n)
 {
-    unsigned int t;
+	unsigned int t;
 
-    for (t = 0; t < n; t++)
-        r[t] = b;
-    return (r);
+	for (t = 0; t < n; t++)
+	r[t] = b;
+	return (r);
 }
