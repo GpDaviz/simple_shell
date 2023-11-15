@@ -16,13 +16,13 @@ extern char **environ;
 
 /* PATH Shell Functions */
 
-/* Program Flow */
+/* Program Flow Gp */
 
-int prompt(void);
-char *_read(void);
-char *_fullpathbuffer(char **av, char *PATH, char *copy);
-int checkbuiltins(char **av, char *buffer, int exitstatus);
-int _forkprocess(char **av, char *buffer, char *fullpathbuffer);
+int _prompt(void);
+char *readit(void);
+char *fullypathedbuffer(char **av, char *PATH, char *copy);
+int _checkbuiltin(char **av, char *buffer, int exitstatus);
+int forkedprocess(char **av, char *buffer, char *fullypathedbuffer);
 
 /* String Helper Functions */
 
