@@ -33,16 +33,16 @@ int envin(void)
 	return (0);
 }
 /**
- * puts - prints a string
+ *_ puts - prints a string
  * @str: string to print
  */
-void puts(char *str)
+void _puts(char *str)
 {
 	int t;
 
 	for (t = 0; str[t] != '\0'; t++)
-		putchar(str[t]);
-	putchar('\n');
+		_putchar(str[t]);
+	_putchar('\n');
 }
 /**
  * putchar - prints a character
@@ -50,7 +50,7 @@ void puts(char *str)
  *
  * Return: return value of write syscall
  */
-int putchar(char t)
+int _putchar(char t)
 {
 	return (write(1, &t, 1));
 }

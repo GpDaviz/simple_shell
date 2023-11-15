@@ -43,8 +43,8 @@ char *_concat(char *tmp, char **av, char *tok);
 
 char *getenvin(const char *name);
 int envin(void);
-void puts(char *str);
-int putchar(char t);
+void _puts(char *str);
+int _putchar(char t);
 char *memsetin(char *r, char b, unsigned int n);
 
 #endif /* GODSPOWER_H */
