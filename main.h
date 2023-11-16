@@ -24,17 +24,17 @@ char *fullypathedbuffer(char **av, char *PATH, char *copy);
 int _checkbuiltin(char **av, char *buffer, int exitstatus);
 int forkedprocess(char **av, char *buffer, char *fullypathedbuffer);
 
-/* String Helper Functions */
+/* Stringgp Functions */
 
-char *_strdup(char *str);
-int _splitstring(char *str);
-int _strcmp(const char *s1, const char *s2);
-char *_strcat(char *dest, char *src);
-int _strlen(char *s);
+char *_strdusp(char *str);
+int splitstring(char *str);
+int _strcmps(const char *s1, const char *s2);
+char *_strcats(char *dest, char *src);
+int _strlens(char *s);
 
-/*Tokenize & PATH Helper Functions*/
+/*Tokenizer Functions*/
 
-char **tokenize(char *buffer);
+char **tokenizer(char *buffer);
 int _splitPATH(char *str);
 int _PATHstrcmp(const char *s1, const char *s2);
 char *_concat(char *tmp, char **av, char *tok);

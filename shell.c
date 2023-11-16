@@ -12,14 +12,14 @@ int main(void)
 	int exitstatus = 0;
 
 	signal(SIGINT, SIG_IGN);
-	PATH = _getenv("PATH");
+	PATH = getenvin("PATH");
 	if (PATH == NULL)
 		return (-1);
 	while (1)
 	{
 		av = NULL;
-		prompt();
-		buffer = _read();
+		_prompt();
+		buffer = readit();
 		if (*buffer != '\0')
 	{
 		av = tokenizer(buffer);
@@ -28,10 +28,10 @@ int main(void)
 			free(buffer);
 			continue;
 		}
-		fullypathedbuffer = _fullypathedbuffer(av, PATH, copy);
-		if (checkbuiltin(av, buffer, exitstatus) == 1)
+		av = fullypathedbuffer (av, PATH, copy);
+		if (_checkbuiltin(av, buffer, exitstatus) == 1)
 			continue;
-		exitstatus = _forkedprocess(av, buffer, fullypathedbuffer);
+		exitstatus = forkedprocess(av, buffer, fullypathedbuffer);
 	}
 		else
 			free(buffer);
