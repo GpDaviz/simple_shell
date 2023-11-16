@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
- * _strdups - duplicates a string
+ * _strdup - duplicates a string
  * @str: pointer to string to duplicate
  *
  * Return: pointer to duplicated string
  */
-char *_strdusp(char *str)
+char *_strdup(char *str)
 {
 	int i;
 	char *dest_str;
@@ -14,7 +14,7 @@ char *_strdusp(char *str)
 	if (str == NULL)
 		return (NULL);
 	for (i = 0; str[i] != '\0'; i++)
-	;
+		;
 	dest_str = malloc(sizeof(char) * (i + 1));
 	if (dest_str == NULL)
 		return (NULL);
@@ -25,13 +25,14 @@ char *_strdusp(char *str)
 	dest_str[i] = '\0';
 	return (dest_str);
 }
+
 /**
- * splitstring - counts number of words in string
+ * _splitstring - counts number of words in string
  * @str: pointer to string to count
  *
  * Return: number of words in string
  */
-int splitstring(char *str)
+int _splitstring(char *str)
 {
 	int i;
 	int searchflag = 1;
@@ -40,22 +41,23 @@ int splitstring(char *str)
 	for (i = 0; str[i]; i++)
 	{
 		if (str[i] != ' ' && searchflag == 1)
-	{
-		wordcount += 1;
-		searchflag = 0;
-	}
+		{
+			wordcount += 1;
+			searchflag = 0;
+		}
 		if (str[i + 1] == ' ')
 			searchflag = 1;
 	}
 	return (wordcount);
 }
+
 /**
- * _strcmps - compares two strings
+ * _strcmp - compares two strings
  * @s1: char type
  * @s2: char type
  * Return: integer value
  */
-int _strcmps(const char *s1, const char *s2)
+int _strcmp(const char *s1, const char *s2)
 {
 	while ((*s1 != '\0' && *s2 != '\0') && *s1 == *s2)
 	{
@@ -67,15 +69,16 @@ int _strcmps(const char *s1, const char *s2)
 	else
 		return (*s1 - *s2);
 }
+
 /**
- * _strcats - concatenates two strings
+ * _strcat - concatenates two strings
  * @dest: char type
  * @src: char type
  * i - integer type
  * j - integer type
  * Return: char type
  */
-char *_strcats(char *dest, char *src)
+char *_strcat(char *dest, char *src)
 {
 	int i;
 	int j;
@@ -87,13 +90,14 @@ char *_strcats(char *dest, char *src)
 	dest[i] = '\0';
 	return (dest);
 }
+
 /**
- * _strlens - returns the length of a string
+ * _strlen - returns the length of a string
  * @s: character type
  * i - integer type
  * Return: integer type
  */
-int _strlens(char *s)
+int _strlen(char *s)
 {
 	int i;
 

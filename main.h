@@ -16,35 +16,35 @@ extern char **environ;
 
 /* PATH Shell Functions */
 
-/* Program Flow Gp */
+/* Program Flow */
 
-int _prompt(void);
-char *readit(void);
-char *fullypathedbuffer(char **av, char *PATH, char *copy);
-int _checkbuiltin(char **av, char *buffer, int exitstatus);
-int forkedprocess(char **av, char *buffer, char *fullypathedbuffer);
+int prompt(void);
+char *_read(void);
+char *_fullpathbuffer(char **av, char *PATH, char *copy);
+int checkbuiltins(char **av, char *buffer, int exitstatus);
+int _forkprocess(char **av, char *buffer, char *fullpathbuffer);
 
-/* Stringgp Functions */
+/* String Helper Functions */
 
-char *_strdusp(char *str);
-int splitstring(char *str);
-int _strcmps(const char *s1, const char *s2);
-char *_strcats(char *dest, char *src);
-int _strlens(char *s);
+char *_strdup(char *str);
+int _splitstring(char *str);
+int _strcmp(const char *s1, const char *s2);
+char *_strcat(char *dest, char *src);
+int _strlen(char *s);
 
-/*Tokenizer Functions*/
+/*Tokenize & PATH Helper Functions*/
 
-char **tokenizer(char *buffer);
+char **tokenize(char *buffer);
 int _splitPATH(char *str);
 int _PATHstrcmp(const char *s1, const char *s2);
 char *_concat(char *tmp, char **av, char *tok);
 
-/* Program gp Functions */
+/*Other Helper Funcs*/
 
-char *getenvin(const char *name);
-int envin(void);
+char *_getenv(const char *name);
+int _env(void);
 void _puts(char *str);
-int _putchar(char t);
-char *memsetin(char *r, char b, unsigned int n);
+int _putchar(char c);
+char *_memset(char *s, char b, unsigned int n);
 
 #endif /* GODSPOWER_H */

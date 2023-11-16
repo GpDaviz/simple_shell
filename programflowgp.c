@@ -1,10 +1,11 @@
 #include "main.h"
+
 /**
- * _prompt - writes a prompt
+ * prompt - writes a prompt
  *
- * Return: 0 on sucess
+ * Return: 0 on success
  */
-int _prompt(void)
+int prompt(void)
 {
 	char *prompt = "$ ";
 	ssize_t writecount = 0;
@@ -13,16 +14,17 @@ int _prompt(void)
 	{
 		writecount = write(STDOUT_FILENO, prompt, 2);
 		if (writecount == -1)
-		exit(0);
+			exit(0);
 	}
 	return (0);
 }
+
 /**
- * readit - read stdin and save it in a buffer
+ * _read - reads stdin and stores it in a buffer
  *
  * Return: a pointer to the buffer
  */
-char *readit(void)
+char *_read(void)
 {
 	ssize_t readcount = 0;
 	size_t n = 0;
@@ -32,36 +34,37 @@ char *readit(void)
 	readcount = getline(&buffer, &n, stdin);
 	if (readcount == -1)
 	{
-	free(buffer);
-	if (isatty(STDIN_FILENO) != 0)
-		write(STDOUT_FILENO, "\n", 1);
-	exit(0);
+		free(buffer);
+		if (isatty(STDIN_FILENO) != 0)
+			write(STDOUT_FILENO, "\n", 1);
+		exit(0);
 	}
 	if (buffer[readcount - 1] == '\n' || buffer[readcount - 1] == '\t')
 		buffer[readcount - 1] = '\0';
 	for (i = 0; buffer[i]; i++)
 	{
 		if (buffer[i] == '#' && buffer[i - 1] == ' ')
-	{
-		buffer[i] = '\0';
-		break;
-	}
+		{
+			buffer[i] = '\0';
+			break;
+		}
 	}
 	return (buffer);
 }
+
 /**
- * fullypathedbuffer - finds the string to call execve
+ * _fullpathbuffer - finds the string to call execve on
  * @av: pointer to array of user of strings
  * @PATH: pointer to PATH string
  * @copy: pointer to copy of PATH string
  *
  * Return: a pointer to string to call execve on
  */
-char *fullypathedbuffer(char **av, char *PATH, char *copy)
+char *_fullpathbuffer(char **av, char *PATH, char *copy)
 {
-	char *tok, *fullypathedbuffer = NULL, *concatsstr = NULL;
+	char *tok, *fullpathbuffer = NULL, *concatstr = NULL;
 	static char tmp[256];
-	int PATHcount = 0, fullypathedflag = 0, /*len = 0,*/ z = 0, toklen = 0;
+	int PATHcount = 0, fullpathflag = 0, z = 0, toklen = 0;
 	struct stat h;
 
 	copy = NULL;
@@ -70,48 +73,49 @@ char *fullypathedbuffer(char **av, char *PATH, char *copy)
 	tok = strtok(copy, ": =");
 	while (tok != NULL)
 	{
-		concatsstr = _concat(tmp, av, tok);
-		if (stat(concatsstr, &h) == 0)
-	{
-		fullypathedbuffer = concatsstr;
-		fullypathedflag = 1;
-		break;
-	}
+		concatstr = _concat(tmp, av, tok);
+		if (stat(concatstr, &h) == 0)
+		{
+			fullpathbuffer = concatstr;
+			fullpathflag = 1;
+			break;
+		}
 		if (z < PATHcount - 2)
 		{
 			toklen = _strlen(tok);
 			if (tok[toklen + 1] == ':')
-		{
-			if (stat(av[0], &h) == 0)
-		{
-			fullypathedbuffer = av[0];
-			fullypathedflag = 1;
-			break;
-		}
-		}
+			{
+				if (stat(av[0], &h) == 0)
+				{
+					fullpathbuffer = av[0];
+					fullpathflag = 1;
+					break;
+				}
+			}
 		}
 		z++;
 		tok = strtok(NULL, ":");
 	}
-	if (fullypathedflag == 0)
-		fullypathedbuffer = av[0];
+	if (fullpathflag == 0)
+		fullpathbuffer = av[0];
 	free(copy);
-	return (fullypathedbuffer);
+	return (fullpathbuffer);
 }
+
 /**
- * _checkbuiltin - check if first users string is a built-in
+ * checkbuiltins - check if first user string is a built-in
  * @av: pointer to array of user of strings
  * @buffer: pointer to user string
  * @exitstatus: exit status of execve
  * Return: 1 if user string is equal to env or 0 otherwise
  */
-int _checkbuiltin(char **av, char *buffer, int exitstatus)
+int checkbuiltins(char **av, char *buffer, int exitstatus)
 {
 	int i;
 
-	if (_strcmp(av[0], "envin") == 0)
+	if (_strcmp(av[0], "env") == 0)
 	{
-		envin();
+		_env();
 		for (i = 0; av[i]; i++)
 			free(av[i]);
 		free(av);
@@ -129,15 +133,16 @@ int _checkbuiltin(char **av, char *buffer, int exitstatus)
 	else
 		return (0);
 }
+
 /**
- * forkedprocess - create child process to execute based on user input
+ * _forkprocess - create child process to execute based on user input
  * @av: pointer to array of user of strings
  * @buffer: pointer to user string
- * @fullypathedbuffer: pointer to user input
+ * @fullpathbuffer: pointer to user input
  *
  * Return: 0 on success
  */
-int forkedprocess(char **av, char *buffer, char *fullypathedbuffer)
+int _forkprocess(char **av, char *buffer, char *fullpathbuffer)
 {
 	int i, status, result, exitstatus = 0;
 	pid_t pid;
@@ -145,12 +150,12 @@ int forkedprocess(char **av, char *buffer, char *fullypathedbuffer)
 	pid = fork();
 	if (pid == -1)
 	{
-	perror("Error");
-	exit(1);
+		perror("Error");
+		exit(1);
 	}
 	if (pid == 0)
 	{
-		result = execve(fullypathedbuffer, av, environ);
+		result = execve(fullpathbuffer, av, environ);
 		if (result == -1)
 		{
 			perror(av[0]);

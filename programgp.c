@@ -1,71 +1,83 @@
 #include "main.h"
-/**
- * getenvin - gets PATH member from environ
- * @name: pointer to PATH string
- *
- * Return: pointer to PATH member string or NULL if not found
- */
-char *getenvin(const char *name)
-{
-	int t, result;
 
-	for (t = 0; environ[t]; t++)
+/**
+ * _getenv - Gets PATH member from environ
+ * @name: Pointer to PATH string
+ *
+ * Return: Pointer to PATH member string or NULL if not found
+ */
+char *_getenv(const char *name)
+{
+	int i, result;
+
+	for (i = 0; environ[i]; i++)
 	{
-		result = _PATHstrcmp(name, environ[t]);
+		result = _PATHstrcmp(name, environ[i]);
 		if (result == 0)
-	{
-		return (environ[t]);
-	}
+		{
+			return (environ[i]);
+		}
 	}
 	return (NULL);
 }
-/**
- * envin - prints the environ
- *
- * Return: 0 on success
- */
-int envin(void)
-{
-	int t;
 
-	for (t = 0; environ[t]; t++)
-		puts(environ[t]);
+/**
+ * _env - Prints the environ
+ *
+ * Return: Always 0 on success
+ */
+int _env(void)
+{
+	int i;
+
+	for (i = 0; environ[i]; i++)
+	{
+		_puts(environ[i]);
+	}
 	return (0);
 }
+
 /**
- *_ puts - prints a string
- * @str: string to print
+ * _puts - Prints a string
+ * @str: String to print
  */
 void _puts(char *str)
 {
-	int t;
+	int c;
 
-	for (t = 0; str[t] != '\0'; t++)
-		_putchar(str[t]);
+	for (c = 0; str[c] != '\0'; c++)
+	{
+		_putchar(str[c]);
+	}
 	_putchar('\n');
 }
-/**
- * putchar - prints a character
- * @t: character to print
- *
- * Return: return value of write syscall
- */
-int _putchar(char t)
-{
-	return (write(1, &t, 1));
-}
-/**
- * memsetin - fills memory with a constant byte
- * @r: character array to fill
- * @b: constant byte to fill with
- * @n: how many bytes to fill
- * Return: the pointer to the char array
- */
-char *memsetin(char *r, char b, unsigned int n)
-{
-	unsigned int t;
 
-	for (t = 0; t < n; t++)
-	r[t] = b;
-	return (r);
+/**
+ * _putchar - Prints a character
+ * @c: Character to print
+ *
+ * Return: Return value of write syscall
+ */
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
+}
+
+/**
+ * _memset - Fills memory with a constant byte
+ * @s: Character array to fill
+ * @b: Constant byte to fill with
+ * @n: Number of bytes to fill
+ *
+ * Return: The pointer to the char array
+ */
+char *_memset(char *s, char b, unsigned int n)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+	{
+		s[i] = b;
+	}
+	return (s);
 }

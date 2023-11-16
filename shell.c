@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * main - runs the shell program
  *
@@ -6,33 +7,33 @@
  */
 int main(void)
 {
-	char *fullypathedbuffer = NULL, *copy = NULL, *buffer = NULL;
+	char *fullpathbuffer = NULL, *copy = NULL, *buffer = NULL;
 	char *PATH = NULL;
 	char **av;
 	int exitstatus = 0;
 
 	signal(SIGINT, SIG_IGN);
-	PATH = getenvin("PATH");
+	PATH = _getenv("PATH");
 	if (PATH == NULL)
 		return (-1);
 	while (1)
 	{
 		av = NULL;
-		_prompt();
-		buffer = readit();
+		prompt();
+		buffer = _read();
 		if (*buffer != '\0')
-	{
-		av = tokenizer(buffer);
-		if (av == NULL)
 		{
-			free(buffer);
-			continue;
+			av = tokenize(buffer);
+			if (av == NULL)
+			{
+				free(buffer);
+				continue;
+			}
+			fullpathbuffer = _fullpathbuffer(av, PATH, copy);
+			if (checkbuiltins(av, buffer, exitstatus) == 1)
+				continue;
+			exitstatus = _forkprocess(av, buffer, fullpathbuffer);
 		}
-		av = fullypathedbuffer (av, PATH, copy);
-		if (_checkbuiltin(av, buffer, exitstatus) == 1)
-			continue;
-		exitstatus = forkedprocess(av, buffer, fullypathedbuffer);
-	}
 		else
 			free(buffer);
 	}

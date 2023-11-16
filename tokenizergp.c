@@ -1,11 +1,12 @@
 #include "main.h"
+
 /**
- * tokenizer - creates array of tokens based on user string
+ * tokenize - creates array of tokens based on user string
  * @buffer: pointer to user string
  *
  * Return: pointer to array of user strings
  */
-char **tokenizer(char *buffer)
+char **tokenize(char *buffer)
 {
 	char *token;
 	int i = 0, wordcount = 0;
@@ -28,6 +29,7 @@ char **tokenizer(char *buffer)
 	av[i] = NULL;
 	return (av);
 }
+
 /**
  * _splitPATH - counts the number of PATH members
  * @str: pointer to string to count
@@ -54,6 +56,7 @@ int _splitPATH(char *str)
 	}
 	return (wordcount);
 }
+
 /**
  * _PATHstrcmp - compares PATH with environ to find PATH value
  * @s1: pointer PATH string
@@ -72,6 +75,7 @@ int _PATHstrcmp(const char *s1, const char *s2)
 	}
 	return (0);
 }
+
 /**
  * _concat - concats user string with PATH member string and /
  * @tmp: static array to store concatenated string
